@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Tarefas do Usuário</title>
+</head>
+<body>
+    <h1>Tarefas de <span th:text="${usuario.nome}">Nome</span></h1>
+
+    <form action="/adicionarTarefa" method="post">
+        <input type="text" name="descricao" placeholder="Nova Tarefa" required />
+        <button type="submit">Adicionar</button>
+    </form>
+
+    <ul>
+        <li th:each="tarefa, iter : ${usuario.tarefas}">
+            <span th:text="${tarefa.descricao}"></span> -
+            <span th:text="${tarefa.concluida} ? 'Concluída' : 'Pendente'"></span>
+            <form action="/concluirTarefa" method="post" style="display:inline;">
+                <input type="hidden" name="index" th:value="${iter.index}" />
+                <input type="date" name="dataConclusao" required />
+                <button type="submit">Concluir</button>
+            </form>
+        </li>
+    </ul>
+
+    <a href="/login">Sair</a>
+</body>
+</html>
